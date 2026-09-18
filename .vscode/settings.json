@@ -1,0 +1,18 @@
+{
+  // Point every Python tool (Pylance, debugger, terminal) at the uv-managed venv,
+  // so bare `python` is never looked up on the system PATH.
+  "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+  "python.terminal.activateEnvironment": true,
+  "python.analysis.extraPaths": ["${workspaceFolder}/src"],
+
+  // Code Runner (the ▶ button / Ctrl+Alt+N) ignores python.defaultInterpreterPath
+  // and only substitutes its OWN placeholders ($workspaceRoot, $fullFileName, ...).
+  // It does NOT understand ${workspaceFolder}. Note $fullFileName is already quoted
+  // for us by the extension, so it must not be wrapped in quotes here.
+  "code-runner.executorMap": {
+    "python": "\"$workspaceRoot/.venv/bin/python\" -u $fullFileName"
+  },
+  "code-runner.clearPreviousOutput": true
+  // code-runner.cwd is deliberately left unset: its default is already the
+  // workspace root, and setting it to "${workspaceFolder}" would be used literally.
+}
